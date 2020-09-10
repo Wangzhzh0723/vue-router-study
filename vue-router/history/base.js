@@ -11,6 +11,17 @@ export function createRoute(record, location) {
     matched: res
   }
 }
+
+function runQueue(queue, iterator, cb) {
+  // 异步迭代
+  function step(index) {
+    if (index >= queue.length) return cb()
+    const hook = queue[index]
+    iterator(hook, () => step(++index))
+  }
+  step(0)
+}
+
 export default class BaseHistory {
   constructor(router) {
     this.router = router
@@ -37,13 +48,21 @@ export default class BaseHistory {
     )
       return
 
-    // 更新current 路由发生改变
-    this.updateRoute(route)
+    // 在更新之前先调用注册好的导航守卫
 
-    onComplete && onComplete()
-    // 根据路径加载不同的组件
-    // this.router.matcher.match(location) 拿到组件
-    // 渲染组件
+    const queue = [...this.router.beforeHooks] // 拿到注册的方法
+    const iterator = (hook, next) => {
+      hook(this.current, route, next)
+    }
+    runQueue(queue, iterator, () => {
+      // 更新current 路由发生改变
+      this.updateRoute(route)
+
+      onComplete && onComplete()
+      // 根据路径加载不同的组件
+      // this.router.matcher.match(location) 拿到组件
+      // 渲染组件
+    })
   }
   updateRoute(route) {
     this.current = route // 每次路由切换 都会更改current的值

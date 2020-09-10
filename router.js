@@ -54,4 +54,14 @@ router.matcher.addRoutes([
   }
 ])
 
+router.beforeEach((from, to, next) => {
+  console.log(1)
+  next()
+})
+
+router.beforeEach((from, to, next) => {
+  console.log(2)
+  next()
+})
+
 export default router
