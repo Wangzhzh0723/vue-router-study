@@ -1,3 +1,6 @@
+import link from "./components/link"
+import view from "./components/view"
+
 // 插件安装入口
 // 插件一般用于定义全局组件 全局指令  过滤器  原型方法... 拓展(增强)模块功能
 
@@ -28,14 +31,19 @@ export default function install(Vue, options) {
     }
   })
 
-  Vue.component("router-link", {
-    render: h => h("div", {}, "link")
-  })
+  Vue.component("router-link", link)
 
-  Vue.component("router-view", {
-    render: h => h("div", {}, "view")
-  })
+  Vue.component("router-view", view)
 
-  Vue.prototype.$route = {}
-  Vue.prototype.$router = {}
+  // 代表路由中所有实例都有的属性
+  Object.defineProperty(Vue.prototype, "$route", {
+    get() {
+      return this._routerRoot._route // path matched
+    }
+  })
+  Object.defineProperty(Vue.prototype, "$router", {
+    get() {
+      return this._routerRoot._router // 方法 push go back match replace
+    }
+  })
 }

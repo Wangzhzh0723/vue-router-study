@@ -29,7 +29,6 @@ export default class BaseHistory {
     // 跳转时都会调用此方法 from  to
     // 路径变化 视图需要更新(响应式数据原理)
     const route = this.router.match(location)
-    console.log(route, "route")
 
     // 防止重复跳转
     if (

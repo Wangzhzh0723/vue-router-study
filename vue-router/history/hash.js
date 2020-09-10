@@ -21,4 +21,9 @@ export default class HashHistory extends BaseHistory {
       this.transitionTo(this.getCurrentLocation())
     })
   }
+  push(location) {
+    this.transitionTo(location, () => {
+      window.location.hash = location
+    })
+  }
 }

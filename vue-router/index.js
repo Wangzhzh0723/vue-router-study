@@ -31,6 +31,12 @@ export default class VueRouter {
   match(location) {
     return this.matcher.match(location)
   }
+  push(to) {
+    this.history.push(to) // 跳转路由
+  }
+  go() {}
+  back() {}
+  replace() {}
   // 初始化
   init(app) {
     // 监听hash之变化  默认跳转到对应的路径中

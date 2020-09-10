@@ -19,13 +19,13 @@ const router = new Router({
         {
           path: "a",
           component: {
-            render: h => h("a")
+            render: h => <h1>a</h1>
           }
         },
         {
           path: "/b",
           component: {
-            render: h => h("b")
+            render: h => <h1>b</h1>
           }
         }
       ]
@@ -37,7 +37,7 @@ router.matcher.addRoutes([
   {
     path: "/c",
     component: {
-      render: h => h("c")
+      render: h => <h1>c</h1>
     }
   },
   {
@@ -47,7 +47,7 @@ router.matcher.addRoutes([
       {
         path: "aa",
         component: {
-          render: h => h("aa")
+          render: h => <h1>aa</h1>
         }
       }
     ]
