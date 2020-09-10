@@ -2,9 +2,7 @@ import BaseHistory from "./base"
 
 function ensureSlash() {
   // location.hash是有兼容性问题的
-  if (window.location.hash) {
-    return
-  }
+  if (window.location.hash) return
   window.location.hash = "/" // 默认加个 / 路径就行
 }
 

@@ -16,6 +16,10 @@ export default function install(Vue, options) {
         this._routerRoot = this // 给当前根组件增加一个属性 _routerRoot 代表自己
         this._router = this.$options.router
         this._router.init(this) // 这里的this是跟实例
+
+        // 将router中的current变成响应式的
+        Vue.util.defineReactive(this, "_route", this._router.history.current)
+        console.log(this._route)
       } else {
         this._routerRoot = this.$parent && this.$parent._routerRoot
       }

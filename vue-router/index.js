@@ -28,10 +28,12 @@ export default class VueRouter {
         break
     }
   }
+  match(location) {
+    return this.matcher.match(location)
+  }
   // 初始化
   init(app) {
     // 监听hash之变化  默认跳转到对应的路径中
-    console.log(app.$options.name)
     const history = this.history
     const setUpHashListener = () => {
       history.setUpListener() // 监听路由变化
@@ -40,6 +42,10 @@ export default class VueRouter {
       history.getCurrentLocation(), // 获取当前路径
       setUpHashListener
     )
+
+    history.listen(route => {
+      app._route = route
+    })
 
     // transitionTo 放到base中 做成公共的方法
     // getCurrentLocation  放到自己家中  window.location.hash/path
